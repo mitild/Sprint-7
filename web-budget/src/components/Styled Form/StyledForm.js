@@ -11,7 +11,7 @@ const StyledForm = styled.div`
 `
 
 const StyledInput = styled.input`
-  margin-left: 1em;
+  margin: 0 .2em;
 `
 
 export { StyledForm, StyledInput }
