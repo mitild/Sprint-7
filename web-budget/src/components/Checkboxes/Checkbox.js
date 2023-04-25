@@ -1,5 +1,4 @@
 import { Fragment } from 'react';
-import Panel from '../Styled Form/Panel';
 const Checkbox = ({ id, name, price, description, handleCheck, ischecked }) => {
 
   return (

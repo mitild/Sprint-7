@@ -1,6 +1,6 @@
 import { StyledForm, StyledInput } from './StyledForm'
 
-const Panel = ({ onchange }) => {
+const Panel = ({ onchange, pageValue, langValue }) => {
   return (
     <StyledForm>
       <label htmlFor="pages">Número de Páginas
@@ -9,6 +9,7 @@ const Panel = ({ onchange }) => {
           onChange={ onchange }
           name="pages"
           id="pages"
+          value={ pageValue }
         />
       </label>
       <label htmlFor="languages">Número de Idiomas
@@ -17,6 +18,7 @@ const Panel = ({ onchange }) => {
           onChange={ onchange }
           name="languages"
           id="languages"
+          value={ langValue }
         />
       </label>
     </StyledForm>

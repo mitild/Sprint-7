@@ -49,6 +49,8 @@ const form = services.map(({ name, description, price, id, isChecked }) => {
   // Conditional rendering of extra services
   const Option = isChecked && name === 'checkWeb' ? <Panel 
       onchange={ handleWebBudget }
+      pageValue={extras.Pqty > 0 && extras.Pqty}
+      langValue={extras.Lqty > 0 && extras.Lqty}
     />
     :
     undefined
