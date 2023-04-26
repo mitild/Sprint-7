@@ -1,13 +1,13 @@
 import { StyledForm, StyledInput } from './StyledForm'
 import CustomButton from '../StyledButton/CustomButton'
 
-const CustomInput = ({ onchange, pageValue, langValue, handleadd, handleremove }) => {
+const CustomInput = ({ onchange, pageValue, langValue }) => {
   return (
     <StyledForm>
       <label htmlFor="pages">Número de Páginas   
         <CustomButton
           text= '+'
-          handleClick={ handleadd }
+          handleClick={ onchange }
           id= 'addPage'
         ></CustomButton>
         <StyledInput 
@@ -19,14 +19,14 @@ const CustomInput = ({ onchange, pageValue, langValue, handleadd, handleremove }
         />
         <CustomButton
           text= '-'
-          handleClick={ handleremove }
+          handleClick={ onchange }
           id= 'removePage'
         ></CustomButton>
       </label>
       <label htmlFor="languages">Número de Idiomas
         <CustomButton
           text= '+'
-          handleClick={ handleadd }
+          handleClick={ onchange }
           id= 'addLang'
         ></CustomButton>
         <StyledInput 
@@ -38,7 +38,7 @@ const CustomInput = ({ onchange, pageValue, langValue, handleadd, handleremove }
         />
         <CustomButton
           text= '-'
-          handleClick={ handleremove }
+          handleClick={ onchange }
           id= 'removeLang'
         ></CustomButton>
       </label>

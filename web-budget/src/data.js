@@ -19,7 +19,7 @@ const services = [
   description: 'Una campaña de Google Ads (200€)',
   price: 200,
   id: '3'
-  } 
+  }
 ]
 
 export default services

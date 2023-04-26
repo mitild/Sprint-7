@@ -1,52 +1,17 @@
 import { useState, Fragment, useEffect } from 'react';
 import services from './data'
 import Checkbox from './components/Checkboxes/Checkbox'
-import Panel from './components/Styled Form/Panel'
+// import Panel from './components/Styled Form/Panel'
 import CustomInput from './components/Styled Form/CustomInput';
+import { useBudget } from './custom hooks/useBudget';
 
 function App() {
 // State with array of objects containing available services data
 const [ formData, setFormData ] = useState(services)
 // State with total of selected checkboxes
 const [ total, setTotal ] = useState(0)
-// State with quantity of extra pages and languages
-const [ extras, setExtras ] = useState({Pqty: 0, Lqty: 0}
-)
-
-// Handle the extra pages and languages
-function handleWebBudget(e) {
-  const { id, value } = e.target
-  id === 'pages' ? setExtras(prev => ({...prev, Pqty: value})) : setExtras(prev => ({...prev, Lqty: value}))
-  console.log('soy')
-}
-
-// Handle the extra pages and languages add Buttons
-function handleAdd(e) {
-  const { id } = e.target
-  if(id === 'addPage') {
-    setExtras(prev => ({...prev, Pqty: Number(prev.Pqty + 1)}))
-  } else if(id === 'addLang'){
-      setExtras(prev => ({...prev, Lqty: Number(prev.Lqty + 1)}))
-    }
-}
-
-// Handle the extra pages and languages remove Buttons
-function handleRemove(e) {
-
-  const { id } = e.target
-
-  if(id === 'removePage') {
-    setExtras(prev => {
-      return prev.Pqty > 0 ? {...prev, Pqty: Number(prev.Pqty - 1)} : {...prev, Pqty: 0}
-    })
-  } 
-  
-  else if(id === 'removeLang'){
-    setExtras(prev => {
-      return prev.Lqty > 0 ? {...prev, Lqty: Number(prev.Lqty - 1)} : {...prev, Lqty: 0}
-    })
-  }
-} 
+// Import the Custom Hook for handling the budgets
+const { extras, handleWebBudget } = useBudget()
 
 // Total cost of those extras
 const totalExtras = [Number(extras.Pqty), Number(extras.Lqty)].reduce(((a,b)=> a + b)) * 30
@@ -80,15 +45,8 @@ const form = services.map(({ name, description, price, id, isChecked }) => {
   const Option = isChecked && name === 'checkWeb' ? 
     
     <>
-    {/* <Panel 
-      onchange={ handleWebBudget }
-      pageValue={extras.Pqty > 0 && extras.Pqty}
-      langValue={extras.Lqty > 0 && extras.Lqty}
-    /> */}
     <CustomInput
       onchange={ handleWebBudget}
-      handleadd={ handleAdd }
-      handleremove={ handleRemove }
       pageValue={extras.Pqty > 0 && extras.Pqty}
       langValue={extras.Lqty > 0 && extras.Lqty}
     />
@@ -109,8 +67,6 @@ const form = services.map(({ name, description, price, id, isChecked }) => {
     </Fragment> 
   )
 })
-
-
 
   return (
     <div className="App">
