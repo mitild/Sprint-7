@@ -1,7 +1,8 @@
 import { StyledForm, StyledInput } from './StyledForm'
 import CustomButton from '../StyledButton/CustomButton'
+import StyledInfoBtn from '../StyledInfoBtn/StyledInfoBtn'
 
-const CustomInput = ({ onchange, pageValue, langValue }) => {
+const CustomInput = ({ onchange, pageValue, langValue, modalState, handleModal }) => {
   return (
     <StyledForm>
       <label htmlFor="pages">Número de Páginas   
@@ -22,6 +23,12 @@ const CustomInput = ({ onchange, pageValue, langValue }) => {
           handleClick={ onchange }
           id= 'removePage'
         ></CustomButton>
+        <StyledInfoBtn 
+          handler={ handleModal }
+          state={ modalState }
+          service={ 'página' }
+          pages={ pageValue }
+        />
       </label>
       <label htmlFor="languages">Número de Idiomas
         <CustomButton
@@ -41,6 +48,12 @@ const CustomInput = ({ onchange, pageValue, langValue }) => {
           handleClick={ onchange }
           id= 'removeLang'
         ></CustomButton>
+         <StyledInfoBtn 
+          handler={ handleModal }
+          state={ modalState }
+          service={ 'idioma' }
+          languages={ langValue }
+        />
       </label>
     </StyledForm>
   )

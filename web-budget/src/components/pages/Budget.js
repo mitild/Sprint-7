@@ -1,10 +1,10 @@
-import { Fragment } from "react"
+import { Fragment, useState } from 'react';
 import Checkbox from '../Checkboxes/Checkbox'
 import CustomInput from '../StyledForm/CustomInput'
 import { useBudget } from "../../custom-hooks/useBudget"
 import { useLocalStorage } from "../../custom-hooks/useLocalStorage"
 
-const Budget = () => {
+const Budget = ({ modalState, handleModal }) => {
   // Import the Custom Hook for handling the budgets
 const { withExtras, setWithExtras, handleWebBudget } = useBudget()
 // State with total of selected checkboxes
@@ -52,6 +52,8 @@ const form = withExtras.map(({ name, description, price, id, isChecked, extras }
         onchange={ handleWebBudget }
         pageValue={extras.pages}
         langValue={extras.languages}
+        modalState={ modalState }
+        handleModal={ handleModal }
       />
     </>
     :
@@ -74,13 +76,14 @@ const form = withExtras.map(({ name, description, price, id, isChecked, extras }
 
   return (
 
-    <div className="container">
-      <h3>¿Qué quieres hacer?</h3>
-      <div>
-        { form }
+      <div className="container">
+        <h3>¿Qué quieres hacer?</h3>
+        <div>
+          { form }
+        </div>
+        <h3>Precio: { total + totalExtras }€</h3>
       </div>
-      <h3>Precio: { total + totalExtras }€</h3>
-    </div>
+
   );
 }
 
