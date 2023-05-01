@@ -4,6 +4,7 @@ const services = [
   isChecked: false,
   description: 'Una página web (500€)',
   price: 500,
+  extras: {pages: 0, languages: 0},
   id: '1'
   }, 
   {

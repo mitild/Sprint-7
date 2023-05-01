@@ -9,7 +9,7 @@ const Checkbox = ({ id, name, price, description, handleCheck, ischecked }) => {
         name={ name }
         id={ price }
         onChange={ handleCheck }
-        ischecked={ ischecked }
+        checked={ ischecked ? true : false }
       />
       <label 
         key={ name }

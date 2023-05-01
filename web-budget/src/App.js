@@ -1,70 +1,74 @@
-import { useState, Fragment, useEffect } from 'react';
-import services from './data'
+import { Fragment } from 'react';
 import Checkbox from './components/Checkboxes/Checkbox'
-// import Panel from './components/Styled Form/Panel'
 import CustomInput from './components/Styled Form/CustomInput';
-import { useBudget } from './custom hooks/useBudget';
+import { useBudget } from './custom-hooks/useBudget'
+import { useLocalStorage } from './custom-hooks/useLocalStorage';
 
 function App() {
-// State with array of objects containing available services data
-const [ formData, setFormData ] = useState(services)
-// State with total of selected checkboxes
-const [ total, setTotal ] = useState(0)
 // Import the Custom Hook for handling the budgets
-const { extras, handleWebBudget } = useBudget()
+const { withExtras, setWithExtras, handleWebBudget } = useBudget()
+// State with total of selected checkboxes
+const [ total, setTotal ] = useLocalStorage('Total', 0)
 
-// Total cost of those extras
-const totalExtras = [Number(extras.Pqty), Number(extras.Lqty)].reduce(((a,b)=> a + b)) * 30
+// Total cost of the extras
+const pagesQty = withExtras[0].extras.pages
+const languagesQty = withExtras[0].extras.languages
+const totalExtras = (pagesQty + languagesQty) * 30
 
-// Handle the chackboxes selection
+// Handle the checkboxes selection
 const handleCheck = (e) => {
   const { name, checked } = e.target
   let prices = []
 
-  const selected = formData.filter(box => {
+  withExtras.filter(box => {
     if(box.name === name) {
       box.isChecked = checked
     }
     return box
   })
 
-  formData.filter(box => {
+  withExtras.filter(box => {
     if(box.isChecked) {
       prices.push(box.price)
     }
   })
+  
+   // Reset extras to 0 when Web Page service is no longer checked
+   const resetExtras = withExtras.map(service => {
+    return service.name === 'checkWeb' && !service.isChecked ? {...service, extras: {pages: 0, languages: 0}} : service
+   })
 
+  setWithExtras(resetExtras)
   setTotal(prices.reduce((a,b)=> a + b, 0))
-  setFormData(selected)
 }
 
 // Get the checkboxes. Can add as many as wanted by adding to the data.js array
-const form = services.map(({ name, description, price, id, isChecked }) => {
+const form = withExtras.map(({ name, description, price, id, isChecked, extras }) => {
 
   // Conditional rendering of extra services
-  const Option = isChecked && name === 'checkWeb' ? 
-    
+  const Option = isChecked && name === 'checkWeb' ?
     <>
-    <CustomInput
-      onchange={ handleWebBudget}
-      pageValue={extras.Pqty > 0 && extras.Pqty}
-      langValue={extras.Lqty > 0 && extras.Lqty}
-    />
+      <CustomInput
+        onchange={ handleWebBudget }
+        pageValue={extras.pages}
+        langValue={extras.languages}
+      />
     </>
     :
     undefined
 
-  return (  
+  return (
     <Fragment key={ id } >
-    <Checkbox 
+    <Checkbox
       key={ id }
       name={ name }
       id={ price }
       handleCheck={ handleCheck }
       description={ description }
+      ischecked={ isChecked }
     />
     { Option }
-    </Fragment> 
+    </Fragment>
   )
 })
 
