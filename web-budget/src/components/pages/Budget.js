@@ -12,8 +12,6 @@ const Budget = ({ modalState, handleModal }) => {
 const { withExtras, setWithExtras, handleWebBudget } = useBudget()
 // State with total of selected checkboxes
 const [ total, setTotal ] = useLocalStorage('Total', 0)
-// State for handling sidebar
-const [sidebar, setSidebar] = useState(false)
 
 // Total cost of the extras
 const pagesQty = withExtras[0].extras.pages
@@ -22,7 +20,7 @@ const totalWithExtras = ((pagesQty + languagesQty) * 30) + total
 
 // Budget States
 const [ savedBudgets, setSavedBudgets ] = useState({budget: '', client: ''})
-const [ budgetsArr, setBudgetsArr ] = useState([])
+const [ budgetsArr, setBudgetsArr ] = useLocalStorage('budgets', [])
 // Get the inputs data for the budget object
 const handleBudget = (e) => {
   const { value, name } = e.target
@@ -33,7 +31,6 @@ const handleBudget = (e) => {
 const handleSidebar = () => {
 
   if(savedBudgets.budget !== '' || savedBudgets.client !== '' ) {
-    setSidebar(true)
     const newBudget = {
       budget: savedBudgets.budget,
       client: savedBudgets.client,
@@ -126,7 +123,7 @@ const form = withExtras.map(({ name, description, price, id, isChecked, extras }
           />
         </div>
         {
-          sidebar 
+          budgetsArr.length > 0 
           && 
           <Sidebar 
             array={ budgetsArr }

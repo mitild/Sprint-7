@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { StyledContainer, StyledSidebarBtn, StyledUl, StyledInput } from './StyledSidebar';
 import useSavedBudget from '../../custom-hooks/useSavedBudgets';
 
