@@ -1,8 +1,27 @@
 import {StyledLi, StyledHr} from '../components/StyledSidebar/StyledSidebar';
 import {nanoid} from 'nanoid';
+import {useState} from 'react';
 
 const useSavedBudget = (array, handleArray) => {
+  // State holding the current search
+  const [ searchTerm, setSearchTerm ] = useState('')
+  // Update the searched for value
+  const handleSearch = (e) => {
+    const { value } = e.target
+    setSearchTerm(value)
+  }
 
+  // Interactive array filtered by the search input value
+  const searchResults = array.map(budget => {
+    if(searchTerm == '') {
+      return budget
+    }
+    else if(budget.budget.toLowerCase().includes(searchTerm.toLowerCase())){
+      return budget
+    }
+  }).filter(each => each !== undefined)
+
+  // Sorting buttons
   const handleSortBtns = (e) => {
     const { id } = e.target 
     if (id === 'alpha') {
@@ -14,7 +33,7 @@ const useSavedBudget = (array, handleArray) => {
     }
   }
 
-  const budgets = array.map(budgetItem => {
+  const budgets = searchResults.map(budgetItem => {
 
     const { budget, client, services, totalPrice, date } = budgetItem
 
@@ -41,7 +60,10 @@ const useSavedBudget = (array, handleArray) => {
     )
   })
 
-  return [ handleSortBtns, budgets ]
+  // Conditionally render search results or "Not Found" message
+  const budgetsNotFound = budgets.length === 0 ? 'Lo siento no hemos podido encontrar ningún budget con ese nombre' : budgets
+
+  return [ handleSortBtns, budgetsNotFound, handleSearch, searchResults ]
 }
 
 export default useSavedBudget

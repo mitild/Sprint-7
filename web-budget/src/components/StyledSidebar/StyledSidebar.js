@@ -43,4 +43,17 @@ const StyledHr = styled.hr`
   border: 1px solid #F27052;
   margin-top: 1.5em;
 `
-export { StyledContainer, StyledUl, StyledLi, StyledSidebarBtn, StyledHr }
+
+const StyledInput = styled.input`
+  border: 2px solid #F27052;
+  border-radius: 20px;
+  height: 35.5px;
+  text-indent: 1em;
+  &:focus-visible {
+    outline: none;
+    background-color: #f26f52d0;
+    color: #FFF;
+    font-weight: 700;
+  }
+`
+export { StyledContainer, StyledUl, StyledLi, StyledSidebarBtn, StyledHr, StyledInput }
