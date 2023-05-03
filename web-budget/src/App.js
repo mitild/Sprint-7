@@ -4,6 +4,7 @@ import Budget from './components/pages/Budget';
 import Home from './components/pages/Home';
 import Navbar from './components/StyledNavbar/Navbar';
 import CustomModal from './components/StyledModal/CustomModal';
+import Error from './components/pages/404';
 
 function App() {
   // State for handling Modal Windows
@@ -24,6 +25,7 @@ function App() {
       <Routes>
           <Route path={'/'} element={ <Home /> } />
           <Route path={'/budget'} element={ <Budget modalState={ modal } handleModal={ setModal }/> } />
+          <Route path={'*'} element={ <Error /> } />
       </Routes> 
     </div>
   )

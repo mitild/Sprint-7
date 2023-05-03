@@ -1,22 +1,60 @@
+/*--------------------------
+GLOBAL STYLING
+--------------------------*/
+
+html, * {
+  box-sizing: border-box;
+}
+html {
+  margin: 0;
+  padding: 0;
+}
 body {
   margin: 0;
-  /* width: 400px; */
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.container {
-  width: 450px;
+/*--------------------------
+BASIC LAYOUT
+--------------------------*/
+.container-home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 400px;
   margin: auto;
+  text-align: center;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.container {
+  /* max-width: 1000px; */
+  display: grid;
+  grid-gap: 1.2em;
+  grid-template-columns: 1fr 2fr 1fr;
+  justify-items: center;
+  align-items: center;
 }
+
+.budget-form {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
+/* Layout Media Queries*/
+
+@media (max-width: 952px) {
+  .budget-form {
+      grid-column-start: 1;
+      grid-column-end: -1;
+    }
+}
+
+/*--------------------------
+OVERRIDE BROWSER STYLING
+--------------------------*/
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,

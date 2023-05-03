@@ -10,8 +10,7 @@ const StyledButton = styled.button`
   color: #FFFFFF;
   font-size: 1.2rem;
   font-weight: bold;
-  &:hover,
-  &:focus {
+  &:hover {
     color: #F27052;
     background-color: #FFFFFF;
   }
@@ -23,5 +22,4 @@ const StyledButton = styled.button`
     margin-left: .3em;
   }
 `
-
-export default StyledButton
+export  { StyledButton }

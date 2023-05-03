@@ -8,6 +8,7 @@ const StyledForm = styled.div`
   gap: 2em;
   padding: 3em 1em;
   margin: 1em 0;
+  max-width: 500px;
 `
 
 const StyledInput = styled.input`

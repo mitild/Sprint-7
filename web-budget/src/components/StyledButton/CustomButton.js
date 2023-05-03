@@ -1,4 +1,4 @@
-import StyledButton from "./StyledButton"
+import { StyledButton } from "./StyledButton"
 
 const CustomButton = ({ text, handleClick, id }) => {
   return (

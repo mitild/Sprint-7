@@ -3,17 +3,52 @@ import Checkbox from '../Checkboxes/Checkbox'
 import CustomInput from '../StyledForm/CustomInput'
 import { useBudget } from "../../custom-hooks/useBudget"
 import { useLocalStorage } from "../../custom-hooks/useLocalStorage"
+import Sidebar from '../StyledSidebar/Sidebar';
+import CustomButton from '../StyledButton/CustomButton';
+import SaveBudgetForm from '../SaveBudgetForm/SaveBudgetForm';
 
 const Budget = ({ modalState, handleModal }) => {
-  // Import the Custom Hook for handling the budgets
+// Import the Custom Hook for handling the budgets
 const { withExtras, setWithExtras, handleWebBudget } = useBudget()
 // State with total of selected checkboxes
 const [ total, setTotal ] = useLocalStorage('Total', 0)
+// State for handling sidebar
+const [sidebar, setSidebar] = useState(false)
 
 // Total cost of the extras
 const pagesQty = withExtras[0].extras.pages
 const languagesQty = withExtras[0].extras.languages
-const totalExtras = (pagesQty + languagesQty) * 30
+const totalWithExtras = ((pagesQty + languagesQty) * 30) + total
+
+// Budget States
+const [ savedBudgets, setSavedBudgets ] = useState({budget: '', client: ''})
+const [ budgetsArr, setBudgetsArr ] = useState([])
+// Get the inputs data for the budget object
+const handleBudget = (e) => {
+  const { value, name } = e.target
+    setSavedBudgets(prev => ({...prev, [name]: value}))
+}
+
+// Create Budget Object with the needed data
+const handleSidebar = () => {
+
+  if(savedBudgets.budget !== '' || savedBudgets.client !== '' ) {
+    setSidebar(true)
+    const newBudget = {
+      budget: savedBudgets.budget,
+      client: savedBudgets.client,
+      services: withExtras.filter(service => service.isChecked),
+      totalPrice: `${totalWithExtras}€`,
+      date: new Date().toLocaleString(),
+    }
+    setBudgetsArr(prev => ([...prev, newBudget]))
+    setSavedBudgets({budget: '', client: ''})
+  } 
+  else {
+    window.alert('Por favor, controla que los campos: "Nombre de Presupuesto" y "Nombre del Cliente", no estén vacios o sean iguales a los ya guardados. Cambiando o agregando un número a cualquiera de los campos ya es suficiente.')
+  }
+  
+}
 
 // Handle the checkboxes selection
 const handleCheck = (e) => {
@@ -75,15 +110,29 @@ const form = withExtras.map(({ name, description, price, id, isChecked, extras }
 })
 
   return (
-
       <div className="container">
-        <h3>¿Qué quieres hacer?</h3>
-        <div>
-          { form }
+        <div className='budget-form'>
+          <h2>¿Qué quieres hacer?</h2>
+          <div>
+            { form }
+          </div>
+          <h3>Precio: { totalWithExtras }€</h3>
+          <SaveBudgetForm
+            handleBudget={ handleBudget }
+          />
+          <CustomButton 
+            text={ 'Guardar presupuesto' }
+            handleClick={ handleSidebar }
+          />
         </div>
-        <h3>Precio: { total + totalExtras }€</h3>
+        {
+          sidebar 
+          && 
+          <Sidebar 
+            array={ budgetsArr }
+          />
+        }
       </div>
-
   );
 }
 
