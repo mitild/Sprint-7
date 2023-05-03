@@ -35,12 +35,12 @@ BASIC LAYOUT
   grid-gap: 1.2em;
   grid-template-columns: 1fr 2fr 1fr;
   justify-items: center;
-  align-items: center;
 }
 
 .budget-form {
   grid-column-start: 2;
   grid-column-end: 3;
+  padding-top: 2em;
 }
 
 /* Layout Media Queries*/

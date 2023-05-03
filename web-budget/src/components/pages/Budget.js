@@ -130,6 +130,7 @@ const form = withExtras.map(({ name, description, price, id, isChecked, extras }
           && 
           <Sidebar 
             array={ budgetsArr }
+            handleArray={ setBudgetsArr }
           />
         }
       </div>

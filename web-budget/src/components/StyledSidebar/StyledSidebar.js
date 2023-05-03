@@ -6,7 +6,6 @@ const StyledContainer = styled.div`
   justify-content: center;
   padding: 0 2em;
   border-left: 3px solid #000;
-  z-index: -1;
   transition: all .6s;
   @media (max-width: 952px) {
     border-left: none !important;
@@ -18,7 +17,30 @@ const StyledContainer = styled.div`
   }
 `
 
+const StyledUl = styled.ul`
+  padding: 0;
+`
+
 const StyledLi = styled.li`
   margin-bottom: .7em;
+  list-style: none;
+  padding-bottom: .4em;
 `
-export { StyledContainer, StyledLi }
+
+const StyledSidebarBtn = styled.button`
+  cursor: pointer;  
+  background-color: #FFF;
+  border: 2px solid #F27052;
+  color: #F27052;
+  padding: .6em;
+  margin-top: .4em;
+  &:hover {
+    background-color: #F27052;
+    color: #FFF;
+  }
+`
+const StyledHr = styled.hr`
+  border: 1px solid #F27052;
+  margin-top: 1.5em;
+`
+export { StyledContainer, StyledUl, StyledLi, StyledSidebarBtn, StyledHr }

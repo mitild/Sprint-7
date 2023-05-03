@@ -6,7 +6,6 @@ const StyledNavbar = styled.div`
   align-items: center;
   background-color: #FFF;
   padding: 0 1em;
-  margin-bottom: 3em;
   border-bottom: 3px solid #000;
 `
 const StyledUl = styled.ul`

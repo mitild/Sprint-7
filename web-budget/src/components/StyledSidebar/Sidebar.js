@@ -1,42 +1,29 @@
-import { StyledContainer, StyledLi } from "./StyledSidebar"
-import { nanoid } from "nanoid"
+import { StyledContainer, StyledSidebarBtn, StyledUl } from './StyledSidebar';
+import useSavedBudget from '../../custom-hooks/useSavedBudgets';
 
-const Sidebar = ({array}) => {
-
-  const budgets = array.map(budgetItem => {
-
-    const { budget, client, services, totalPrice, date } = budgetItem
-
-    const allServices = services.map(service => {
-      if(service.name === 'checkWeb'){
-        return {service: `Sitio web con ${service.extras.pages + service.extras.languages} extras` }
-      } else if( service.name === 'checkSeo'){
-        return {service: 'Servicio de posicionamiento SEO'}
-      } else {
-        return {service: 'Campaña de Google Ads'}
-      }
-    })
-
-    const serviceEl = allServices.map(el => {
-      return (
-        <i key={ nanoid() }>{` - ${el.service}`}</i>
-      )
-    })
-
-    console.log(serviceEl)
-    return(
-        <StyledLi key={ nanoid() }>
-          <b>Presupuesto: </b>{ budget } <b>Cliente: </b>{ client } <b>Servicios: </b>{ serviceEl }  <b>Total: </b>{ totalPrice } <b>Fecha: </b>{ date }
-        </StyledLi> 
-    )
-  })
+const Sidebar = ({ array, handleArray }) => {
+  // Custom Hook for handling and sorting saved Budgets
+  const [ handleSortBtns, budgets ] = useSavedBudget(array, handleArray)
 
   return (
     <StyledContainer className="sidebar">
+      <p>Ordenar por:</p>
+      <StyledSidebarBtn
+        id='alpha'
+        onClick={ handleSortBtns }
+      >A-Z</StyledSidebarBtn>
+      <StyledSidebarBtn
+        id='old'
+        onClick={ handleSortBtns }
+      >Antiguos</StyledSidebarBtn>
+      <StyledSidebarBtn
+        id='new'
+        onClick={ handleSortBtns }
+      >Recientes</StyledSidebarBtn>
       <h1>Tus Presupuestos</h1>
-      <ul>
+      <StyledUl>
         { budgets }
-      </ul>
+      </StyledUl>
     </StyledContainer>
   )
 }
