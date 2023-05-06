@@ -1,9 +1,42 @@
 import servicesData from '../data';
 import { useLocalStorage } from './useLocalStorage';
+import {useSearchParams} from 'react-router-dom';
 
 function useBudget() {
+   // State for initialize with shared params
+  const [ params ] = useSearchParams()
+
+  const web = params.get('web')
+  const seo = params.get('seo')
+  const ads = params.get('ads')
+  const paginas = params.get('paginas')
+  const lenguages = params.get('lenguages')
+
+  const getParams = servicesData.map(service => {
+      if(service.id === '1') {
+        return {
+          ...service,
+          isChecked: web,
+          extras: {pages: paginas, languages: lenguages}
+        }
+      }
+      else if(service.id === '2') {
+        return {
+          ...service,
+          isChecked: seo
+        }
+      }
+      else if(service.id === '3') {
+        return {
+          ...service,
+          isChecked: ads
+        }
+      }
+      return service
+  })
   // State with quantity of extra pages and languages
-  const [ withExtras, setWithExtras ] = useLocalStorage('Services', servicesData)
+  const [ withExtras, setWithExtras ] = useLocalStorage('Services', getParams)
+ 
 
   const handleWebBudget = (e) => {
     const { id, value } = e.target
@@ -39,7 +72,7 @@ function useBudget() {
   return {
     withExtras,
     setWithExtras,
-    handleWebBudget,
+    handleWebBudget
   }
 }
 

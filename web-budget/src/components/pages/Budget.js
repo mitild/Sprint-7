@@ -1,17 +1,31 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react'
 import Checkbox from '../Checkboxes/Checkbox'
 import CustomInput from '../StyledForm/CustomInput'
 import { useBudget } from "../../custom-hooks/useBudget"
 import { useLocalStorage } from "../../custom-hooks/useLocalStorage"
-import Sidebar from '../StyledSidebar/Sidebar';
-import CustomButton from '../StyledButton/CustomButton';
-import SaveBudgetForm from '../SaveBudgetForm/SaveBudgetForm';
+import Sidebar from '../StyledSidebar/Sidebar'
+import CustomButton from '../StyledButton/CustomButton'
+import SaveBudgetForm from '../SaveBudgetForm/SaveBudgetForm'
+import { useSearchParams } from 'react-router-dom'
 
 const Budget = ({ modalState, handleModal }) => {
 // Import the Custom Hook for handling the budgets
 const { withExtras, setWithExtras, handleWebBudget } = useBudget()
 // State with total of selected checkboxes
 const [ total, setTotal ] = useLocalStorage('Total', 0)
+// State form params
+const [ searchParams, setSearchParams ] = useSearchParams()
+
+useEffect(() => {
+  setSearchParams(
+    {
+      web: withExtras[0].isChecked, 
+      seo: withExtras[1].isChecked,
+      ads: withExtras[2].isChecked,
+      paginas: withExtras[0].extras.pages,
+      lenguages: withExtras[0].extras.languages
+    })
+}, [withExtras])
 
 // Total cost of the extras
 const pagesQty = withExtras[0].extras.pages
